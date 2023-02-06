@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    // "strictFunctionTypes": false,//函数的类型检查关掉
+    // "strictNullChecks": false, //void/null/undefined之间是否存在严格的空检查
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    // element 类型提示
+    "types": ["element-plus/global"],
+    // 解析非相对模块名的基准目录
+    "baseUrl": "./",
+    // 模块名到基于 baseUrl 的路径映射的列表。
+    "paths": {
+      "@": ["src"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
+}

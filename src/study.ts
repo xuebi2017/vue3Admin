@@ -158,7 +158,7 @@ type B = {
 };
 type C = A | B;
 const d = {
-  name: "frank",
+  name: "frank11",
   gender: "男",
 };
 const c: C = d;

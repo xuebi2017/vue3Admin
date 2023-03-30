@@ -1,0 +1,139 @@
+.el-container {
+	width: 100%;
+	height: 100%;
+	.el-header {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 55px;
+		padding: 0 15px 0 0;
+		background-color: #191a20;
+		border-bottom: 1px solid #f1f1f1;
+		.header-lf {
+			display: flex;
+			align-items: center;
+			overflow: hidden;
+			white-space: nowrap;
+			.logo {
+				flex-shrink: 0;
+				width: 210px;
+				margin-right: 16px;
+				span {
+					font-size: 21.5px;
+					font-weight: bold;
+					color: #dadada;
+					white-space: nowrap;
+				}
+				img {
+					width: 28px;
+					object-fit: contain;
+					margin-right: 6px;
+				}
+			}
+		}
+		:deep(.tool-bar-lf) {
+			color: #ffffff;
+			.el-breadcrumb__inner.is-link {
+				color: #e5eaf3;
+				&:hover {
+					color: var(--el-color-primary);
+				}
+			}
+			.el-breadcrumb__item:last-child .el-breadcrumb__inner,
+			.el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+				color: #cfd3dc;
+			}
+		}
+		:deep(.tool-bar-ri) {
+			.toolBar-icon,
+			.header-icon,
+			.el-dropdown-link,
+			.username {
+				color: #e5eaf3;
+			}
+		}
+	}
+	.aside-split {
+		display: flex;
+		height: 100%;
+		background-color: #191a20;
+		.logo {
+			box-sizing: border-box;
+			height: 55px;
+			border-bottom: 1px solid #282a35;
+			img {
+				width: 32px;
+				object-fit: contain;
+			}
+		}
+		.el-scrollbar {
+			height: calc(100% - 55px);
+			.split-list {
+				display: flex;
+				.split-item {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					height: 54px;
+					padding: 0 20px;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					[class^="el-icon"] {
+						margin-right: 5px;
+					}
+					&:hover {
+						background-color: #292b35;
+					}
+					.el-icon {
+						font-size: 21px;
+					}
+					.title {
+						font-size: 14px;
+						transform: scale(0.96);
+					}
+					.el-icon,
+					.title {
+						color: #e5eaf3;
+					}
+				}
+				.split-active {
+					background-color: var(--el-color-primary) !important;
+					.el-icon,
+					.title {
+						color: #ffffff;
+					}
+				}
+			}
+		}
+	}
+	.el-aside {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		overflow: hidden;
+		background-color: #191a20;
+		border-right: 1px solid #191a20;
+		transition: all 0.3s ease;
+		.el-scrollbar {
+			.el-menu {
+				overflow-x: hidden;
+				border-right: none;
+			}
+		}
+		.logo {
+			box-sizing: border-box;
+			height: 55px;
+			// border-bottom: 1px solid #f0eded;
+			span {
+				font-size: 24px;
+				font-weight: bold;
+				color: #dadada;
+				white-space: nowrap;
+			}
+		}
+	}
+	.not-aside {
+		width: 0 !important;
+	}
+}

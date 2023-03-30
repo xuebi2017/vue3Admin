@@ -1,3 +1,3 @@
 export enum HttpCode {
-  SUCCESS = 200,
+	SUCCESS = 2000
 }

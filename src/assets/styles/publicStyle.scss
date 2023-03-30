@@ -1,0 +1,186 @@
+html,
+body,
+#app {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+.hide {
+	display: none;
+}
+.show {
+	display: block;
+}
+
+/* scroll bar */
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: #d3d3d3;
+	border-radius: 20px;
+	box-shadow: inset 0 0 0 white;
+}
+
+/* input */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+	transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+/* flex */
+.flx-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.flx-justify-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/* clearfix */
+.clearfix::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+/* pagination */
+.pagination-border {
+	// text-align: center;
+	padding: 1px 0;
+}
+.el-pagination {
+	padding: 2px 5px;
+	display: flex;
+	justify-content: end;
+}
+
+//form
+.layout-form {
+	width: 100%;
+	.layout-form-header {
+		width: 100%;
+		height: 28px;
+		padding-left: 15px;
+		line-height: 28px;
+		font-size: 14px;
+		font-weight: bold;
+	}
+	.layout-form-body {
+		padding: 0 10px;
+	}
+}
+
+//dialog
+.el-dialog {
+	.el-dialog__header {
+		padding-right: 0;
+	}
+}
+
+//button
+.btn {
+	display: flex;
+	justify-content: flex-end;
+	box-sizing: border-box;
+}
+
+// * 当前页面最大化 css
+.main-maximize {
+	.aside-split,
+	.el-aside,
+	.el-header,
+	.el-footer,
+	.tabs-box {
+		display: none !important;
+	}
+}
+
+/* nprogress样式 */
+#nprogress .bar {
+	background: var(--el-color-primary) !important;
+}
+#nprogress .spinner-icon {
+	border-top-color: var(--el-color-primary) !important;
+	border-left-color: var(--el-color-primary) !important;
+}
+#nprogress .peg {
+	box-shadow: 0 0 10px var(--el-color-primary), 0 0 5px var(--el-color-primary) !important;
+}
+
+.card-box .el-card__header {
+	padding: 8px 15px;
+	box-sizing: border-box;
+	// font-weight: bold;
+	font-size: 14px;
+}
+
+//table
+.table-box,
+.table-main {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	.table-label {
+		border-left: 4px solid var(--el-color-primary);
+		padding: 6px;
+		border-bottom: 1px solid var(--el-border-color);
+	}
+	// el-table 表格样式
+	.el-table {
+		flex: 1;
+		// 修复 safari 浏览器表格错位 https://github.com/HalseySpicy/Geeker-Admin/issues/83
+		table {
+			width: 100%;
+			.el-table__cell {
+				padding: 0;
+			}
+		}
+		.el-table__header th {
+			height: 40px;
+			font-size: 15px;
+			font-weight: bold;
+			color: var(--el-text-color-primary);
+			background: var(--el-fill-color-light);
+		}
+		.el-table__row {
+			height: 40px;
+			font-size: 14px;
+		}
+
+		// 设置 el-table 中 header 文字不换行，并省略
+		.el-table__header .el-table__cell > .cell {
+			white-space: nowrap;
+		}
+		/* 解决表格数据为空时样式不居中问题 */
+		.el-table__empty-block {
+			position: absolute !important;
+			top: 50% !important;
+			left: 50% !important;
+			transform: translate(-50%, -50%) !important;
+		}
+	}
+}
+
+//布局相关
+.el-main::-webkit-scrollbar {
+	display: none;
+}
+.content-box,
+.chart-box {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	width: 100%;
+}
+.el-space__item:last-child {
+	padding: 0 !important;
+}

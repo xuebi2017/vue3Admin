@@ -1,0 +1,12 @@
+html.normal {
+	.content-box,
+	.table-box,
+	.search-form-box,
+	.chart-box,
+	.pagination-border {
+		background-color: var(--el-color-white);
+	}
+	.el-table th.el-table__cell.is-leaf {
+		background-color: var(--el-fill-color-light);
+	}
+}

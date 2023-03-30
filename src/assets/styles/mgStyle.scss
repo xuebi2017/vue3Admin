@@ -1,0 +1,156 @@
+/* 自定义马钢(mg)模式样式 */
+html.mg {
+	--bg-color: #001f6b;
+	--main-bg-color: #1a367a;
+	--border-light: 1px solid #1a2062;
+	--border-color-light: #1a2062;
+	--text-color: #e5eaf3;
+	--el-text-color-regular: #e5eaf3;
+	--el-text-color-primary: #e5eaf3;
+
+	// * wangEditor
+	--w-e-toolbar-color: #595959;
+	--w-e-toolbar-bg-color: #eeeeee;
+	--w-e-textarea-bg-color: #141414;
+	--w-e-textarea-color: #eeeeee;
+
+	// * 以下为自定义暗黑模式内容
+	// login
+	.login-container {
+		background-color: var(--el-fill-color-extra-light) !important;
+		.login-box {
+			background-color: var(--el-mask-color) !important;
+			.login-form {
+				background-color: var(--el-bg-color) !important;
+				box-shadow: 5px 5px 15px rgb(161 161 161 / 20%) !important;
+				.logo-text {
+					color: var(--el-text-color-primary) !important;
+				}
+			}
+		}
+	}
+
+	// scroll-bar
+	::-webkit-scrollbar {
+		background-color: var(--el-scrollbar-bg-color) !important;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: var(--el-border-color-darker) !important;
+	}
+
+	.el-drawer {
+		.el-divider__text {
+			color: #000000;
+		}
+	}
+	// layout
+	.el-container {
+		.el-aside {
+			background-color: var(--bg-color) !important;
+			border-right: var(--border-light) !important;
+			.logo {
+				border-bottom: var(--border-light) !important;
+				span {
+					color: var(--text-color) !important;
+				}
+			}
+		}
+		.not-aside {
+			border-right: none !important;
+		}
+		.el-header {
+			color: #bdbdc0 !important;
+			background-color: var(--bg-color) !important;
+			border-bottom-color: var(--border-color-light) !important;
+		}
+		.el-main {
+			background-color: var(--main-bg-color) !important;
+			.card {
+				background-color: var(--bg-color) !important;
+			}
+		}
+		.el-tabs {
+			background-color: var(--bg-color) !important;
+		}
+		.el-footer {
+			.footer {
+				background-color: var(--bg-color) !important;
+				border-top-color: var(--border-color-light) !important;
+				a {
+					color: var(--el-text-color-primary) !important;
+				}
+			}
+		}
+	}
+
+	// menu
+	.el-menu,
+	.el-sub-menu,
+	.el-menu-item,
+	.el-sub-menu__title {
+		background-color: var(--bg-color) !important;
+		&:not(.is-active) {
+			color: var(--text-color) !important;
+		}
+		&.is-active {
+			color: #ffffff !important;
+			background-color: #000000 !important;
+		}
+	}
+	.el-menu-item:not(.is-active):hover {
+		background-color: var(--main-bg-color) !important;
+	}
+	.aside-split {
+		background-color: var(--bg-color) !important;
+		border-right: var(--border-light) !important;
+		.logo {
+			border-bottom: var(--border-light) !important;
+		}
+	}
+
+	// guide
+	#driver-highlighted-element-stage {
+		background-color: var(--el-color-info-light-5) !important;
+	}
+
+	//table设置
+	.table-main {
+		background-color: var(--main-bg-color);
+		border-top: 3px solid var(--bg-color);
+	}
+	/* 分页设置 */
+	.pagination-border {
+		text-align: center;
+		border-top: 3px solid var(--bg-color);
+		padding: 5px 0;
+		background-color: var(--main-bg-color);
+	}
+	.u-pagination span,
+	.u-pagination button > i {
+		background-color: var(--main-bg-color);
+		color: var(--text-color);
+	}
+	.u-pagination .btn-next,
+	.u-pagination .btn-prev {
+		background-color: var(--main-bg-color) !important;
+		color: var(--text-color) !important;
+	}
+	.u-pagination .el-pagination__sizes .el-select .el-input .el-input__inner,
+	.el-pagination__jump .el-input__inner {
+		background-color: var(--main-bg-color) !important;
+		color: var(--text-color) !important;
+	}
+	.el-pagination.is-background .el-pager li:not(.disabled).active {
+		background-color: transparent !important;
+		color: var(--text-color);
+	}
+	.u-pagination .el-pagination button:disabled {
+		border: 1px solid #eae8c5;
+	}
+	.u-pagination.is-background .btn-next,
+	.el-pagination.is-background .btn-prev,
+	.el-pagination.is-background .el-pager li {
+		background-color: var(--main-bg-color) !important;
+		color: var(--text-color) !important;
+	}
+}

@@ -151,15 +151,16 @@
 // type D = C
 
 type A = {
-  name: string;
+	name: string;
 };
 type B = {
-  age: number;
+	age: number;
 };
 type C = A | B;
 const d = {
-  name: "frank",
-  gender: "男",
+	name: "frank",
+	gender: "男"
 };
 const c: C = d;
+console.log("🚀 ~ file: study.ts:165 ~ c", c);
 export {};

@@ -28,6 +28,7 @@ import { GlobalStore } from "@/store";
 import { FormInstance, FormRules, ElMessage } from "element-plus";
 import http from "@/http";
 import DynamicRouter from "@/assets/json/dynamicRouter.json";
+import user from "@/assets/json/user.json";
 import { HOME_URL } from "@/config";
 
 const globalStore = GlobalStore();
@@ -49,17 +50,17 @@ const login = async () => {
 		if (!valid) return;
 		loading.value = true;
 		try {
-			let res = await http.post("/roll_mgcold/doLoginAll", loginInfo);
-			console.log("🚀 ~ file: index.vue:52 ~ login ~ res", res);
-			if (res.status === 2000) {
-				ElMessage({
-					type: "success",
-					message: "登录成功"
-				});
-				saveMsg(res.data);
-			}
+			// let res = await http.post("/roll_mgcold/doLoginAll", loginInfo);
+			// if (res.status === 2000) {
+			// 	ElMessage({
+			// 		type: "success",
+			// 		message: "登录成功"
+			// 	});
+			// 	saveMsg(res.data);
+			// }
+			let res: User.UserInfo = user;
+			saveMsg({ user: res });
 		} catch (e) {
-			console.log("🚀 ~ file: index.vue:60 ~ login ~ e", e);
 		} finally {
 			loading.value = false;
 		}
@@ -67,12 +68,11 @@ const login = async () => {
 };
 type loginInfo = {
 	user: User.UserInfo;
-	menus: Menu.MenuOptions[];
-	roles: string;
+	// menus: Menu.MenuOptions[];
+	// roles: string;
 };
 
 const saveMsg = (res: loginInfo) => {
-	console.log("🚀 ~ file: index.vue:74 ~ saveMsg ~ loginInfo", loginInfo);
 	globalStore.$patch(state => {
 		state.userInfo = res.user;
 		// state.menus = res.menus;

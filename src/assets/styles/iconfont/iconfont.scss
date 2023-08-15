@@ -10,6 +10,9 @@
 	-moz-osx-font-smoothing: grayscale;
 	cursor: pointer;
 }
+.icon-xiala::before {
+	content: "\e62b";
+}
 .icon-message::before {
 	font-size: 20px;
 	content: "\e605";

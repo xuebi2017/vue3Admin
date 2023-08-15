@@ -1,0 +1,32 @@
+{
+	"indocno": 1,
+	"account": "admin",
+	"password": "123456",
+	"photo": null,
+	"sname": "开发者用户",
+	"sex": null,
+	"productLines": [
+		{
+			"value": "1720",
+			"key": "1"
+		},
+		{
+			"value": "2130",
+			"key": "2"
+		},
+		{
+			"value": "硅钢",
+			"key": "3"
+		}
+	],
+	"sysRole": [
+		{
+			"indocno": 1,
+			"iline": 1,
+			"sline": "酸轧",
+			"role_name": "开发者",
+			"role_code": "god",
+			"menu_ids": null
+		}
+	]
+}

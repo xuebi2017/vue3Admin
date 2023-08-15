@@ -16,7 +16,6 @@ const router = createRouter({
  * @description 路由拦截 beforeEach
  * */
 router.beforeEach(async (to, from, next) => {
-	console.log("🚀 ~ file: index.ts:19 ~ router.beforeEach ~ to:", to);
 	// const globalStore = GlobalStore();
 	const authStore = AuthStore();
 
@@ -38,6 +37,7 @@ router.beforeEach(async (to, from, next) => {
 		return next({ ...to, replace: true });
 	}
 	//跳转
+	console.log(333);
 	next();
 });
 

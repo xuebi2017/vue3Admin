@@ -65,7 +65,7 @@ const props = defineProps({
 });
 
 const globalStore = GlobalStore();
-const fieldArray = reactive<Table.FieldArrayProps[]>([
+const fieldArray = reactive<Table.ColumProps[]>([
 	{
 		field: "name",
 		label: "文件名",

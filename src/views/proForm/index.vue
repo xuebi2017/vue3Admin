@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import http from "@/http";
 import { ref, reactive, onMounted } from "vue";
-import TasilyForm from "@/components/TasilyForm.vue";
 const formOpts = reactive<Form.FormOptions>({
 	data: {
 		name: "zyp",

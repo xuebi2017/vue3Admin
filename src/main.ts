@@ -6,7 +6,7 @@ import "@/assets/styles/iconfont/iconfont.scss";
 // element plus
 import ElementPlus from "element-plus";
 // element icons
-import * as Icons from "@element-plus/icons-vue";
+import * as elementIcons from "@element-plus/icons-vue";
 // element css
 import "element-plus/dist/index.css";
 // element dark(内置暗黑模式)
@@ -25,8 +25,9 @@ import router from "./router";
 import pinia from "./store";
 
 import TasilyDialog from "@/components/TasilyDialog.vue";
-import TasilyForm from "@/components/TasilyForm.vue";
-import TasilySearchForm from "@/components/TasilySearchForm.vue";
+import TasilyForm from "@/components/TasilyForm/index.vue";
+import TasilyFormDialog from "@/components/TasilyFormDialog/index.vue";
+import TasilySearchForm from "@/components/TasilySearchForm/index.vue";
 import TasilyTable from "@/components/TasilyTable.vue";
 
 const app = createApp(App);
@@ -34,10 +35,11 @@ const app = createApp(App);
 app.component("TasilyTable", TasilyTable);
 app.component("TasilyDialog", TasilyDialog);
 app.component("TasilyForm", TasilyForm);
+app.component("TasilyFormDialog", TasilyFormDialog);
 app.component("TasilySearchForm", TasilySearchForm);
 // 注册element Icons组件
-Object.keys(Icons).forEach(key => {
-	app.component(key, Icons[key as keyof typeof Icons]);
+Object.keys(elementIcons).forEach(key => {
+	app.component(key, elementIcons[key as keyof typeof elementIcons]);
 });
 
 app.use(router).use(pinia).use(ElementPlus, { size: "small", zIndex: 3000 }).mount("#app");

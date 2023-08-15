@@ -1,9 +1,8 @@
 <template>
 	<el-dropdown trigger="click" :teleported="false">
-		<el-button size="small" type="primary">
-			<span>更多</span>
-			<el-icon class="el-icon--right"><arrow-down /></el-icon>
-		</el-button>
+		<div class="more-button">
+			<i :class="'iconfont icon-arrow-down'"></i>
+		</div>
 		<template #dropdown>
 			<el-dropdown-menu>
 				<el-dropdown-item @click="refresh">

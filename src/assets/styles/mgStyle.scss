@@ -1,12 +1,14 @@
 /* 自定义马钢(mg)模式样式 */
 html.mg {
 	--bg-color: #001f6b;
+	--bg-color-active: #041746;
 	--main-bg-color: #1a367a;
 	--border-light: 1px solid #1a2062;
 	--border-color-light: #1a2062;
 	--text-color: #e5eaf3;
-	--el-text-color-regular: #e5eaf3;
+	--el-text-color-regular: #606266;
 	--el-text-color-primary: #e5eaf3;
+	--el-border-color-light: #041746;
 
 	// * wangEditor
 	--w-e-toolbar-color: #595959;
@@ -55,6 +57,9 @@ html.mg {
 				}
 			}
 		}
+		.el-main {
+			color: var(--text-color) !important;
+		}
 		.not-aside {
 			border-right: none !important;
 		}
@@ -93,8 +98,8 @@ html.mg {
 			color: var(--text-color) !important;
 		}
 		&.is-active {
-			color: #ffffff !important;
-			background-color: #000000 !important;
+			color: var(--el-text-color-primary) !important;
+			background-color: var(--bg-color-active) !important;
 		}
 	}
 	.el-menu-item:not(.is-active):hover {

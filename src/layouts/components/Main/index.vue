@@ -4,7 +4,7 @@
 	<el-main>
 		<router-view v-slot="{ Component, route }">
 			<transition appear name="fade-transform" mode="out-in">
-				<keep-alive :include="keepAliveStore.keepAliveName">
+				<keep-alive :include="keepAliveName">
 					<component :is="Component" :key="route.path" v-if="isRouterShow" />
 				</keep-alive>
 			</transition>
@@ -19,6 +19,7 @@
 import { ref, computed, onBeforeUnmount, provide, watch } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { GlobalStore } from "@/store";
+import { storeToRefs } from "pinia";
 import { KeepAliveStore } from "@/store/modules/keepAlive";
 import Maximize from "./components/Maximize.vue";
 import Tabs from "@/layouts/components/Tabs/index.vue";
@@ -26,6 +27,7 @@ import Footer from "@/layouts/components/Footer/index.vue";
 
 const globalStore = GlobalStore();
 const keepAliveStore = KeepAliveStore();
+const { keepAliveName } = storeToRefs(keepAliveStore);
 const themeConfig = computed(() => globalStore.themeConfig);
 const isCollapse = computed(() => globalStore.themeConfig.isCollapse);
 

@@ -27,7 +27,6 @@ defineProps<{ menuList: Menu.MenuOptions[] }>();
 
 const router = useRouter();
 const handleClickMenu = (subItem: Menu.MenuOptions) => {
-	console.log("🚀 ~ file: SubMenu.vue:30 ~ handleClickMenu ~ subItem:", subItem);
 	if (subItem.meta.isLink) return window.open(subItem.meta.isLink, "_blank");
 	router.push(subItem.path);
 };

@@ -62,6 +62,21 @@
 			"children": []
 		},
 		{
+			"path": "/iconPicker",
+			"name": "iconPicker",
+			"component": "/iconPicker/index",
+			"meta": {
+				"icon": "Watermelon",
+				"title": "图标选择器",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true
+			},
+			"children": []
+		},
+		{
 			"path": "/proImageUpload",
 			"name": "proImageUpload",
 			"component": "/proImageUpload/index",
@@ -161,12 +176,12 @@
 					}
 				},
 				{
-					"path": "/system/dictManage",
-					"name": "dictManage",
-					"component": "/system/dictManage/index",
+					"path": "/system/postManage",
+					"name": "postManage",
+					"component": "/system/postManage/index",
 					"meta": {
 						"icon": "Menu",
-						"title": "字典管理",
+						"title": "岗位管理",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,
@@ -175,12 +190,12 @@
 					}
 				},
 				{
-					"path": "/system/timingTask",
-					"name": "timingTask",
-					"component": "/system/timingTask/index",
+					"path": "/system/dictManage",
+					"name": "dictManage",
+					"component": "/system/dictManage/index",
 					"meta": {
 						"icon": "Menu",
-						"title": "定时任务",
+						"title": "字典管理",
 						"isLink": "",
 						"isHide": false,
 						"isFull": false,

@@ -1,25 +1,26 @@
 <template>
 	<div class="table-box">
-		<div class="table-label" v-if="showLabel">
-			<span>{{ label }}</span>
+		<div class="table-title" v-if="showTitle">
+			<span>{{ title }}</span>
 		</div>
-		<div class="table-search">
-			<div v-if="tableHead">
-				<div class="layout-form">
-					<div class="layout-form-header" v-if="title">{{ title }}</div>
-					<div class="layout-form-body" v-if="title === '查询条件'">
-						<slot name="TableHead" />
-					</div>
+		<div class="table-search" v-if="showSearch">
+			<div class="layout-form">
+				<div class="layout-form-body">
+					<tasily-search-form v-bind="searchOpts" @find-by-page="findByPage" @handle-reset="handleReset"></tasily-search-form>
 				</div>
 			</div>
+		</div>
+		<div class="table-head" v-if="showHead">
+			<slot name="tableHead" />
 		</div>
 		<div class="table-main">
 			<!-- :height="tableHeight" -->
 			<el-table
 				v-loading="loadingFlag"
 				ref="tasilyTable"
+				:max-height="maxHeight"
 				highlight-current-row
-				:data="tableData"
+				:data="data ?? tableData"
 				:row-class-name="rowClassName"
 				:summary-method="summaryMethod"
 				:span-method="spanMethod"
@@ -46,7 +47,7 @@
 					show-overflow-tooltip
 					type="selection"
 					align="center"
-					width="50"
+					width="42"
 				/>
 				<el-table-column
 					v-if="indexType === 'index'"
@@ -57,9 +58,9 @@
 					label="序号"
 					align="center"
 				/>
-				<template v-for="(item, index) in fieldArray" :key="index">
+				<template v-for="(item, index) in colums" :key="index">
 					<el-table-column
-						:show-overflow-tooltip="item.showOverflowTooltip"
+						show-overflow-tooltip
 						:formatter="item.formatter"
 						:fixed="item.fixed"
 						:prop="item.field"
@@ -100,10 +101,11 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch, reactive, onMounted } from "vue";
 import { TableInstance } from "element-plus";
 
 import { GlobalStore } from "@/store";
+import http from "@/http";
 const globalStore = GlobalStore();
 let loadingFlag = ref(false);
 const tasilyTable = ref<TableInstance>();
@@ -119,17 +121,13 @@ const emit = defineEmits([
 	"selection-change"
 ]);
 const props = defineProps({
-	label: {
-		type: String,
-		default: "表格label"
-	},
 	title: {
 		type: String,
-		default: "查询条件"
+		default: "表格title"
 	},
 	//表格列
-	fieldArray: {
-		type: Array<Table.FieldArrayProps>,
+	colums: {
+		type: Array<Table.ColumProps>,
 		default: () => {
 			return [];
 		}
@@ -139,13 +137,32 @@ const props = defineProps({
 		type: Number,
 		default: 0
 	},
-	// 表格数据格式
-	tableData: {
+	// 表格数据
+	data: {
 		type: Array,
 		default: () => []
 	},
+	// 表格数据
+	initParam: {
+		type: Object,
+		default: () => {}
+	},
+	requestApi: {
+		type: String,
+		default: ""
+	},
 	// 是否显示标签，默认不显示
-	showLabel: {
+	showTitle: {
+		type: Boolean,
+		default: false
+	},
+	// 是否显示查询框，默认显示
+	showSearch: {
+		type: Boolean,
+		default: true
+	},
+	// 是否显示添加等按钮，默认显示
+	showHead: {
 		type: Boolean,
 		default: true
 	},
@@ -155,7 +172,7 @@ const props = defineProps({
 		default: true
 	},
 	// 是否显示组件头部，默认显示
-	tableHead: {
+	tableSearch: {
 		type: Boolean,
 		default: true
 	},
@@ -163,11 +180,6 @@ const props = defineProps({
 	tableFoot: {
 		type: Boolean,
 		default: false
-	},
-	// 数据的总条数，用于分页
-	total: {
-		type: Number,
-		default: 0
 	},
 	// 分页，每页的数据项数
 	pageSizeList: {
@@ -229,7 +241,7 @@ const props = defineProps({
 	},
 	selection: {
 		type: String,
-		default: "none"
+		default: "select"
 	},
 	showSummary: {
 		type: Boolean,
@@ -241,7 +253,7 @@ const props = defineProps({
 	},
 	indexWidth: {
 		type: String,
-		default: "60"
+		default: "56"
 	},
 	loading: {
 		type: Boolean,
@@ -254,6 +266,41 @@ watch(
 		loadingFlag.value = loading;
 	}
 );
+let maxHeight = ref(`100vh - 55px - 170px`); //55是header高度
+const calcTableHeight = () => {
+	console.log("calcTableHeight");
+	if (globalStore.themeConfig.tabs) {
+		maxHeight.value += ` - 40px`;
+	}
+	if (globalStore.themeConfig.footer) {
+		maxHeight.value += ` - 31px`;
+	}
+	maxHeight.value = `calc(${maxHeight.value})`;
+};
+let total = ref(0);
+let tableData = ref([]);
+const findByPage = async () => {
+	console.log("findByPage");
+	tableData.value = await http.post(props.requestApi, searchInfo);
+};
+const handleReset = async () => {
+	searchInfo.pageIndex = 1;
+	searchInfo.condition = {};
+	console.log("handleReset");
+	findByPage();
+};
+
+let searchOpts = reactive<SearchForm.SearchFormOptions>({
+	data: props.initParam,
+	fieldArray: props.colums.filter(item => item.search) as Form.FieldProps[]
+});
+
+let searchInfo = reactive<Search>({
+	pageSize: 15,
+	pageIndex: 1,
+	condition: searchOpts.data
+});
+
 const formatterTableDataIndex = (index: number) => {
 	var pageIndex = 0;
 	if (props.pageSize || props.currentPage) {
@@ -285,14 +332,17 @@ const handleCurrentRowChange = (val: number) => {
  * @description: 每页条数的改变
  */
 const handleSizeChange = (val: number) => {
-	emit("handle-size-change", val);
+	searchInfo.pageIndex = 1;
+	searchInfo.pageSize = val;
+	findByPage();
 };
 /**
  * @author: wangHongFei
  * @description: 切换页码
  */
 const handleCurrentChange = (val: number) => {
-	emit("handle-current-change", val);
+	searchInfo.pageIndex = val;
+	findByPage();
 };
 const selectionChange = (val: string[]) => {
 	emit("selection-change", val);
@@ -300,5 +350,10 @@ const selectionChange = (val: string[]) => {
 const clearTableSelect = () => {
 	tasilyTable.value!.clearSelection();
 };
+
+onMounted(() => {
+	calcTableHeight();
+	findByPage();
+});
 </script>
 <style lang="scss" scoped></style>

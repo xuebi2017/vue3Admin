@@ -1,6 +1,4 @@
 import type { UploadUserFile } from "element-plus";
-//nprogress
-declare module "nprogress";
 
 declare global {
 	// *Dict
@@ -43,22 +41,21 @@ declare global {
 	//*User
 	namespace User {
 		interface RoleOptions {
-			iline: number;
 			indocno: number;
-			menu_ids: string;
+			iline: number;
+			sline: string;
 			role_code: string;
 			role_name: string;
-			sline: string;
+			menu_ids: string | null;
 		}
 		interface UserInfo {
 			indocno: number;
 			account: string;
-			list_roleId: string;
 			password: string;
-			photo: string;
-			productLines: DictOptions[];
-			sex: string;
+			photo: string | null;
 			sname: string;
+			sex: string | null;
+			productLines: DictOptions[];
 			sysRole: RoleOptions[];
 		}
 	}
@@ -72,16 +69,26 @@ declare global {
 	//table
 	namespace Table {
 		interface TableOptions {
-			fieldArray: FieldArrayProps[];
+			colums: ColumProps[];
+			tableData: Array;
 		}
-		interface FieldArrayProps {
+		interface ColumProps {
 			field: string;
 			label: string;
 			type?: string;
 			width?: string | number;
+			search?: SearchProps;
+			props?: any;
+			options?: Array;
 			showOverflowTooltip?: boolean;
 			fixed?: boolean;
 			formatter?: function;
+			children?: ColumProps[];
+		}
+		interface SearchProps {
+			render?: Function;
+			defaultValue: string | number | boolean;
+			clearable: boolean;
 		}
 	}
 
@@ -89,15 +96,15 @@ declare global {
 	interface Search {
 		pageSize: number;
 		pageIndex: number;
-		condition: Record<string, any>;
+		condition?: Record<string, any>;
 	}
 	//searchForm
 	namespace SearchForm {
 		interface SearchFormOptions extends Form.FormOptions {
 			showOperate?: boolean;
-			showAdd?: boolean;
+			showSearch?: boolean;
 			showReset?: boolean;
-			showInsert?: boolean;
+			showCollapse?: boolean;
 		}
 	}
 
@@ -107,7 +114,7 @@ declare global {
 			disabled?: boolean;
 			inline?: boolean;
 			rules?: Record<string, any>;
-			data: Record<string, any>;
+			data?: Record<string, any>;
 			labelWidth?: number | string;
 			fieldArray?: FieldProps[];
 			showFooter?: boolean;
@@ -129,8 +136,9 @@ declare global {
 
 	//dialog
 	namespace Dialog {
-		interface dialogOptions {
+		interface DialogOptions {
 			title?: string;
+			width?: string | number;
 			visible?: Ref<boolean>;
 			hide: function;
 			ok: function;

@@ -1,75 +1,45 @@
 <template>
-	<el-space direction="vertical">
-		<div class="content-box">
-			<tasily-table
-				:fieldArray="fieldArray"
-				:table-data="tableData"
-				@row-click="clickRow"
-				@handle-current-row-change="handleCurrentRowChange"
-				:total="total"
-				@handle-current-change="handleCurrentChange"
-				@handle-size-change="handleSizeChange"
-				:page-size="searchInfo.pageSize"
-				:current-page="searchInfo.pageIndex"
-				index-type="index"
-			>
-				<template #TableHead>
-					<tasily-search-form
-						v-bind="searchOpts"
-						@find-by-page="findByPage"
-						@handle-insert="handleInsert"
-						@handle-reset="handleReset"
-					></tasily-search-form>
-				</template>
-				<template #operation="scope">
-					<el-button :size="globalStore.themeConfig.assemblySize" type="warning" @click="handleUpdate(scope.row)">修改</el-button>
-					<el-button :size="globalStore.themeConfig.assemblySize" type="danger" @click="handleDeleteOne(scope.row)"
-						>删除</el-button
-					>
-				</template>
-			</tasily-table>
-		</div>
-		<div class="content-box">
-			<tasily-table
-				:fieldArray="fieldArray"
-				:table-data="tableData"
-				@row-click="clickRow"
-				@handle-current-row-change="handleCurrentRowChange"
-				:total="total"
-				@handle-current-change="handleCurrentChange"
-				@handle-size-change="handleSizeChange"
-				:page-size="searchInfo.pageSize"
-				:current-page="searchInfo.pageIndex"
-				index-type="index"
-			>
-				<template #TableHead>
-					<tasily-search-form
-						v-bind="searchOpts"
-						@find-by-page="findByPage"
-						@handle-insert="handleInsert"
-						@handle-reset="handleReset"
-					></tasily-search-form>
-				</template>
-				<template #operation="scope">
-					<el-button :size="globalStore.themeConfig.assemblySize" type="warning" @click="handleUpdate(scope.row)">修改</el-button>
-					<el-button :size="globalStore.themeConfig.assemblySize" type="danger" @click="handleDeleteOne(scope.row)"
-						>删除</el-button
-					>
-				</template>
-			</tasily-table>
-			<tasily-dialog v-bind="dialogOpts">
-				<div class="layout-form">
-					<el-alert :title="alertMessage" type="warning" v-if="alertMessage.length > 0" style="margin-bottom: 10px"> </el-alert>
-					<tasily-form v-bind="formOpts"></tasily-form>
-				</div>
-			</tasily-dialog>
-		</div>
-	</el-space>
+	<div class="content-box">
+		<el-space direction="vertical">
+			<div class="table-box">
+				<tasily-table
+					index-type="index"
+					:colums="colums"
+					:data="tableData"
+					:request-api="userListApi"
+					:init-param="initParam"
+					@handle-current-row-change="handleCurrentRowChange"
+					@selection-change="handleSelectionChange"
+				>
+					<template #tableHead>
+						<el-button type="primary" @click="handleInsert">添加</el-button>
+						<el-button type="primary" plain @click="handleImport">批量导入</el-button>
+						<el-button type="danger" plain @click="handleDelete" :disabled="selectedRows.length == 0"> 批量删除 </el-button>
+						<el-button type="primary" plain @click="handleExport">导出</el-button>
+					</template>
+					<template #operation="scope">
+						<el-button :size="globalStore.themeConfig.assemblySize" type="warning" plain @click="handleUpdate(scope.row)"
+							>修改</el-button
+						>
+						<el-button :size="globalStore.themeConfig.assemblySize" type="danger" plain @click="handleDeleteOne(scope.row)"
+							>删除</el-button
+						>
+					</template>
+				</tasily-table>
+			</div>
+		</el-space>
+		<tasily-form-dialog v-bind="dialog1Opts" />
+		<tasily-dialog v-bind="dialog2Opts">
+			<tasily-import-excel v-bind="excelOpts"></tasily-import-excel>
+		</tasily-dialog>
+	</div>
 </template>
 <script setup lang="tsx">
 import { ref, reactive } from "vue";
 import { GlobalStore } from "@/store";
-import { FormInstance } from "element-plus";
+import TasilyImportExcel from "@/components/TasilyImportExcel/index.vue";
+import { ElMessageBox, ElMessage } from "element-plus";
+import { searchOpts } from "@/constants";
 
 const globalStore = GlobalStore();
 type user = {
@@ -102,103 +72,110 @@ let tableData = reactive<user[]>([
 		name: "zyp1",
 		age: 18,
 		sex: "女"
-	}
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp2",
-	// 	age: 18,
-	// 	sex: "男"
-	// },
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp2",
-	// 	age: 18,
-	// 	sex: "男"
-	// },
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp2",
-	// 	age: 18,
-	// 	sex: "男"
-	// },
-	// {
-	// 	name: "zyp1",
-	// 	age: 18,
-	// 	sex: "女"
-	// },
-	// {
-	// 	name: "zyp2",
-	// 	age: 18,
-	// 	sex: "男"
-	// }
-]);
-let total = ref(0);
-let searchOpts = reactive<SearchForm.SearchFormOptions>({
-	data: {
-		name: "",
-		age: 18
 	},
-	fieldArray: [
-		{
-			field: "name",
-			label: "名字",
-			type: "input"
-		}
-	]
-});
-let searchInfo = reactive<Search>({
-	pageSize: 15,
-	pageIndex: 1,
-	condition: searchOpts.data
-});
-const fieldArray = reactive<Table.FieldArrayProps[]>([
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	},
+	{
+		name: "zyp1",
+		age: 18,
+		sex: "女"
+	},
+	{
+		name: "zyp2",
+		age: 18,
+		sex: "男"
+	}
+]);
+const userListApi = ref("/search");
+const colums = reactive<Table.ColumProps[]>([
 	{
 		field: "name",
 		label: "名字",
-		showOverflowTooltip: true
+		type: "input",
+		search: searchOpts
 	},
 	{
 		field: "age",
-		label: "年龄"
+		label: "年龄",
+		type: "input",
+		search: searchOpts
 	},
 	{
 		field: "sex",
 		label: "性别",
+		type: "select",
+		options: [
+			{
+				label: "男",
+				value: 1
+			},
+			{
+				label: "女",
+				value: 2
+			}
+		],
+		search: searchOpts,
 		formatter: (row: user) => {
 			return <el-tag>{row.sex}</el-tag>;
 		}
 	}
 ]);
-const alertMessage = "";
+let initParam = reactive({ name: "zyp" });
 let formOpts = reactive<Form.FormOptions>({
-	showFooter: false,
 	inline: true,
-	data: {
-		name: "zyp",
-		age: 18
-	},
 	rules: {
 		name: [{ required: true, message: "请输入名字", trigger: "blur" }],
 		age: [{ required: true, message: "请输入年龄", trigger: "blur" }]
@@ -216,36 +193,80 @@ let formOpts = reactive<Form.FormOptions>({
 		}
 	]
 });
-const dialogOpts = reactive<Dialog.dialogOptions>({
+let excelOpts = {};
+const dialog1Opts = reactive<Form.FormOptions & Dialog.DialogOptions>({
+	...formOpts,
 	hide: () => {
-		dialogOpts.visible = false;
+		dialog1Opts.visible = false;
 	},
-	ok: () => {
-		dialogOpts.hide();
+	ok: (val: user) => {
+		dialog1Opts.hide();
 	}
 });
-const currentRow = ref<user>();
-
-const handleCurrentRowChange = (val: user | undefined) => {
-	currentRow.value = val;
+const dialog2Opts = reactive<Dialog.DialogOptions>({
+	width: "800px",
+	hide: () => {
+		dialog2Opts.visible = false;
+	},
+	ok: () => {
+		dialog2Opts.hide();
+	}
+});
+let currentRow = reactive({});
+const handleCurrentRowChange = (val: user) => {
+	currentRow = val;
 };
-const handleCurrentChange = (val: number) => {};
-const handleSizeChange = (val: number) => {};
-const clickRow = (val: user) => {};
-const findByPage = async () => {
-	console.log("searchInfo", searchInfo);
-};
-const handleReset = (formEl: FormInstance | undefined) => {
-	if (!formEl) return;
-	console.log("reset!");
-	formEl.resetFields();
+let selectedRows = ref<user[]>([]);
+const handleSelectionChange = (arr: user[]) => {
+	selectedRows.value = arr;
 };
 const handleInsert = async () => {
-	dialogOpts.title = "添加";
-	dialogOpts.visible = true;
+	dialog1Opts.title = "添加";
+	dialog1Opts.visible = true;
+	dialog1Opts.data = {};
 };
+const handleImport = async () => {
+	dialog2Opts.title = "批量导入";
+	dialog2Opts.visible = true;
+};
+const handleDelete = async () => {
+	ElMessageBox.confirm("确认批量删除数据?", "温馨提示", {
+		type: "warning",
+		confirmButtonText: "确定",
+		cancelButtonText: "取消",
+		draggable: true
+	})
+		.then(() => {
+			ElMessage({
+				type: "success",
+				message: `批量删除成功!`
+			});
+		})
+		.catch(() => {
+			ElMessage({ type: "info", message: "已取消操作" });
+		});
+};
+const handleExport = async () => {};
 const handleUpdate = async (row: user) => {
-	console.log("🚀 ~ file: index.vue:111 ~ handleUpdate ~ row:", row);
+	dialog1Opts.title = "修改";
+	dialog1Opts.visible = true;
+	dialog1Opts.data = row;
 };
-const handleDeleteOne = async (row: user) => {};
+const handleDeleteOne = async (row: user) => {
+	ElMessageBox.confirm("确认删除该行数据?", "温馨提示", {
+		type: "warning",
+		confirmButtonText: "确定",
+		cancelButtonText: "取消",
+		draggable: true
+	})
+		.then(() => {
+			ElMessage({
+				type: "success",
+				message: `删除成功!`
+			});
+		})
+		.catch(() => {
+			ElMessage({ type: "info", message: "已取消操作" });
+		});
+};
 </script>

@@ -50,12 +50,12 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
-	//弹窗显示和隐藏
+	//footer显示和隐藏
 	showFooter: {
 		type: Boolean,
 		default: true
 	},
-	//弹窗显示和隐藏
+	//是否全屏
 	fullScreen: {
 		type: Boolean,
 		default: false
@@ -86,7 +86,6 @@ let dialogVisible = ref(props.visible);
 let dialogTitle = ref(props.title);
 let fullScreenContent = ref("最大化");
 const handleCancel = () => {
-	console.log("hide!!!!");
 	props.hide();
 };
 const handleSubmit = () => {

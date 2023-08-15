@@ -12,21 +12,21 @@
 				</el-form-item>
 			</el-form>
 		</el-card>
-		<el-card class="card-box">
+		<!-- <el-card class="card-box">
 			<template #header>
 				<div class="card-header">
 					<span>文件列表</span>
 				</div>
 			</template>
 			<tasily-file-list v-bind="fileListOpts"></tasily-file-list>
-		</el-card>
+		</el-card> -->
 	</el-space>
 </template>
 <script setup lang="ts">
 import http from "@/http";
 import { ref, reactive, onMounted } from "vue";
 import TasilyFileUpload from "@/components/TasilyFileUpload.vue";
-import TasilyFileList from "@/components/TasilyFileList.vue";
+// import TasilyFileList from "@/components/TasilyFileList.vue";
 const fileListOpts = {
 	tableData: [
 		{
